@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.5</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.smartsnow</groupId>
+    <artifactId>smartpdftoprinter</artifactId>
+    <version>1.0.0</version>
+    <name>smartpdftoprinter</name>
+    <description>SmartPdfToPrinter</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <version.easyexcel>2.2.10</version.easyexcel>
+    </properties>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Aivanlink Release Repository</name>
+            <url>https://smpn.aivanlink.com:28888/nexus/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Aivanlink Snapshot Repository</name>
+            <url>https://smpn.aivanlink.com:28888/nexus/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency> -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+<!--         <dependency> -->
+<!--             <groupId>mysql</groupId> -->
+<!--             <artifactId>mysql-connector-java</artifactId> -->
+<!--         </dependency> -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>com.alibaba</groupId> -->
+<!--             <artifactId>fastjson</artifactId> -->
+<!--             <version>1.2.61</version> -->
+<!--         </dependency> -->
+        <dependency>
+             <groupId>org.apache.commons</groupId>
+             <artifactId>commons-text</artifactId>
+             <version>1.8</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        <!-- <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency> -->
+        
+        <dependency>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+         </dependency>
+        <!-- <dependency>
+            <groupId>com.aivanlink.common</groupId>
+            <artifactId>common-db</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency> -->
+        <dependency>
+            <groupId>com.aivanlink.common</groupId>
+            <artifactId>common-frame</artifactId>
+            <version>1.0.0</version>
+            <!-- <exclusions>
+                <exclusion>
+                    <groupId>org.xerial.snappy</groupId>
+                    <artifactId>snappy-java</artifactId>
+                </exclusion>
+            </exclusions> -->
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+        
+<!--         <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+           <version>4.7.2</version>
+        </dependency> -->
+        <dependency>
+		  <groupId>org.apache.pdfbox</groupId>
+		  <artifactId>pdfbox</artifactId>
+		  <version>2.0.24</version>
+		</dependency>
+		<dependency>
+          <groupId>org.apache.pdfbox</groupId>
+          <artifactId>pdfbox-tools</artifactId>
+          <version>2.0.24</version>
+        </dependency>
+		<dependency>
+          <groupId>org.apache.pdfbox</groupId>
+          <artifactId>fontbox</artifactId>
+          <version>2.0.24</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId> -->
+<!--            <version>2.6.2</version> -->
+            <!-- <exclusions>
+                <exclusion>
+                    <groupId>org.checkerframework</groupId>
+                    <artifactId>checker-qual</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>error_prone_annotations</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency> -->
+        <!-- <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency> -->
+        <!-- pagehelper -->
+<!--         <dependency> -->
+<!--             <groupId>com.github.pagehelper</groupId> -->
+<!--             <artifactId>pagehelper-spring-boot-starter</artifactId> -->
+<!--             <version>1.3.0</version> -->
+<!--         </dependency> -->
+        <!-- <dependency>
+            <groupId>com.aivanlink.common</groupId>
+            <artifactId>common-swagger</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency> -->
+        <dependency>
+            <groupId>org.xerial.snappy</groupId>
+            <artifactId>snappy-java</artifactId>
+            <version>1.1.7.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.osgi</groupId>
+                    <artifactId>org.osgi.core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+<!--                    <debug>true</debug> -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>       
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>    <!-- spring boot 不需要单独打依赖包,已经在spring-boot-maven-plugin完成依赖处理  -->  
+<!--                  <execution>
+                        <id>make-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>com.aivlk.cmp.zhgd.shi.ShiApplication</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>
+                                    jar-with-dependencies
+                                </descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                  </execution>    -->     
+                  <execution><!-- 配置执行器 -->
+                        <id>make-assembly</id>
+                        <phase>package</phase><!-- 绑定到package生命周期阶段上 -->
+                        <goals>
+                          <goal>single</goal><!-- 只运行一次 -->   
+                        </goals>
+                        <configuration>
+                          <finalName>${project.name}-${project.version}</finalName>
+                          <descriptors> 
+                            <!--配置描述文件路径--> 
+                            <descriptor>assembly.xml</descriptor> 
+                          </descriptors>
+                          <outputDirectory>target</outputDirectory>
+                          <appendAssemblyId>false</appendAssemblyId>  
+                        </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <configuration>
+                            <rules>
+                                <dependencyConvergence/>
+                                <bannedDependencies>
+                                    <!--是否检查传递性依赖(间接依赖)-->
+                                    <searchTransitive>true</searchTransitive>
+                                    <includes>
+                                        <exclude>junit:junit:*:*:test</exclude><!-- groupId[:artifactId][:version][:type][:scope][:classifier]  -->
+                                    </includes>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

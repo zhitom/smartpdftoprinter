@@ -1,0 +1,57 @@
+logging:
+  config: classpath:logback.xml
+###########################################
+#common
+#支持多个topic，使用逗号分割
+smartpdftoprinter:
+  #按第一层的子目录并发处理
+  in.dir: pdfs
+  out.dir: pdfs-out
+  job:
+    type: pdf
+    #job发送间隔，单位：秒，0即无间隔，可能任务队列过多会引起打印机异常，需酌情配置
+    interval: 0
+    #打印机中最大等待的job数目，超过就等待
+    maxRemainJobs: 5
+  batch.size: -1
+  #线程数,如果多个不同的消费者使用逗号分割,目前只有1个:订阅处理
+  consumers.thread.num: 1
+  onceFlag: true
+  printer:
+    #打印机，不配置为默认打印机，即windows系统的打印机属性的名称
+    #name: "HP DeskJet 2600 series [665FEC]"
+    name: "Microsoft Print to PDF"
+    #name: "HP7314A6 (HP OfficeJet Pro 8210)"
+    #name: "NPI2414F8 (HP LaserJet MFP M227sdn)"
+    #name: 
+    #打印份数
+    copies: 1
+    #0:实际大小100%打印；1=缩小到合适位置打印；2=拉伸到合适位置打印；3=自适应打印（1和2的综合体）
+    scaling: 0
+    #伸缩比率
+    scalingValue: 100
+    #LANDSCAPE=0表示横打;PORTRAIT=1表示竖打;REVERSE_LANDSCAPE=2表示打印空白
+    pageFormat: 1
+    #指定页面,字符串格式，如:"2,3-20,25",不填或为空即打印所有页面
+    pageNumList: ""
+    #页面设置（取决于页面类型）,单位：mm
+    #A3: 297mm*420mm A4: 210mm*297mm ...
+    width: 210
+    height: 297
+    marginTop: 10
+    marginBottom: 10
+    marginLeft: 10
+    marginRight: 10
+    #双面打印设置：0=单面；1=长边翻转；2=短边翻转
+    sides: 0
+    
+#debug=true
+# -----------------------------
+spring:
+  main:
+    banner-mode: off
+    #是否设定web应用，none-非web，servlet-web应用
+    #web-application-type: none
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

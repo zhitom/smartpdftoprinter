@@ -1,0 +1,102 @@
+<!--
+  ~ Copyright 2019 dc-square GmbH
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<configuration scan="true" scanPeriod="60 seconds"  debug="false">
+	<!-- 屏蔽初始化信息 -->
+	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+<!-- 	通过<property>定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。
+		<contextName>myAppName</contextName>  
+		<timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/> 
+		<property name="APP_Name" value="myAppName" />   
+-->
+	<property name="logpath" value="./log/log" />   
+	<property name="path.log" value="${logpath}" />   
+<!-- MaxHistory是对于%d而言的文件个数 -->
+    <!-- <appender name="ROLLING_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${path.log}_default.log</file>
+          <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${path.log}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy
+                  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+              or whenever the file size reaches 100MB
+              <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+          </rollingPolicy>
+         <Prudent>true</Prudent>
+         <encoder>
+             <pattern>[%d{yyyy-MM-dd HH:mm:ss} %-5level %thread  %file:%line] %logger{36} ==&gt; %msg%n</pattern>
+         </encoder>
+     </appender> -->
+     <appender name="ROLLING_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${path.log}_default.log</file>
+          <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${path.log}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <maxFileSize>20MB</maxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+          </rollingPolicy>
+         <Prudent>true</Prudent>
+         <encoder>
+             <pattern>[%d{yyyy-MM-dd HH:mm:ss} %-5level %thread  %file:%line] %logger{36} ==&gt; %msg%n</pattern>
+         </encoder>
+     </appender>
+     <!-- encoder 默认配置为PatternLayoutEncoder -->
+     <appender name="STDOUT"  class="ch.qos.logback.core.ConsoleAppender" >
+         <encoder>
+             <pattern>[%d{yyyy-MM-dd HH:mm:ss} %-5level %thread  %file:%line] %logger{36} ==&gt; %msg%n</pattern>
+         </encoder>
+
+     </appender>
+	<!-- logback为java中的包 -->   
+  <logger name="Logback">   
+  		<level value="WARN" /><!-- "TRACE", "DEBUG" -->
+  </logger> 
+  <!--类的全路径:过滤下面的信息 -->
+  <logger name="ch.qos.logback" level="WARN" additivity="true" />  
+  <logger name="ch.qos.logback.classic.LoggerContext" level="INFO" additivity="true" />  
+  <logger name="org.apache.zookeeper.server.ZooKeeperServer" level="WARN" additivity="true" />  
+  <logger name="org.apache.zookeeper.ZooKeeper" level="WARN" additivity="true" />  
+  <logger name="org.apache.zookeeper.ClientCnxn" level="WARN" additivity="true" />  
+  <logger name="org.apache.curator" level="WARN" additivity="true" />
+  <logger name="org.apache.curator" level="WARN" additivity="true" />
+  <logger name="org.apache.kafka.common.consumer.internals.Fetcher" level="WARN" additivity="true" />  
+  <logger name="org.apache.ibatis" level="WARN" additivity="true" />  
+  <logger name="com.aivanlink.common.base.metrics.MetricsUtil" level="ERROR" additivity="true" />  
+  <logger name="com.yasenagat.zkweb" level="INFO" additivity="true" />
+  <logger name="org.apache.flume.lifecycle" level="WARN" additivity="true" />  
+  <!--trace,debug,info,warn,error-->
+  <root level="info">
+        <appender-ref ref="ROLLING_FILE" />
+        <appender-ref ref="STDOUT" />
+  </root>
+
+    <logger name="jetbrains.exodus" level="WARN"/>
+    <logger name="org.eclipse.jetty" level="ERROR"/>
+    <logger name="com.google.common.util.concurrent.Futures.CombinedFuture" level="OFF"/>
+    <logger name="oshi" level="ERROR"/>
+    <logger name="com.aivanlink.common.svclog" level="ERROR" />
+    <logger name="ch.qos.logback" level="ERROR" />    
+    <logger name="org.apache.kafka.clients.producer.ProducerConfig" level="INFO" />
+	<!-- sql debug info，和mybatis-config.xml的logPrefix配合使用-->
+   <!-- <logger name="com.mybatis" level="DEBUG" additivity="true" />  -->
+    <logger name="com.mybatis" level="DEBUG" />
+	<logger name="com.mybatis.realdealDbDataSqlMapper.selectExpireThingOnlineInfos" level="ERROR" />
+	<logger name="com.mybatis.realdealDbDataSqlMapper.updateGatewayExpireOnlineInfo" level="ERROR" />
+</configuration>
