@@ -14,6 +14,8 @@
 
 #### 使用说明
 
+二进制下载地址： [smartpdftoprinter-1.0.0.jar](https://gitee.com/smartsnow/smartpdftoprinter/attach_files/861649/download/smartpdftoprinter-1.0.0.jar)
+
 ```bash
 #配置文件独立时的运行：
 java -jar target/smartpdftoprinter-1.0.0.jar --spring.config.location=src/main/resources/application.yml
