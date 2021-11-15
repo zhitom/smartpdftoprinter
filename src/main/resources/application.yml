@@ -5,7 +5,10 @@ logging:
 #支持多个topic，使用逗号分割
 smartpdftoprinter:
   #按第一层的子目录并发处理
-  in.dir: pdfs
+  in:
+    dir: pdfs
+    #glob形式
+    pattern: 'glob:*.pdf'
   out.dir: pdfs-out
   job:
     type: pdf
@@ -38,10 +41,15 @@ smartpdftoprinter:
     #A3: 297mm*420mm A4: 210mm*297mm ...
     width: 210
     height: 297
-    marginTop: 10
-    marginBottom: 10
-    marginLeft: 10
-    marginRight: 10
+    marginTop: 0
+    marginBottom: 0
+    marginLeft: 0
+    marginRight: 0
+    #下面的是去除了页眉和页脚,页眉和页脚可能显示在边距的空间上面，高度不够显示时可能会有覆盖掉
+    #marginTop: 20
+    #marginBottom: 0
+    #marginLeft: 0
+    #marginRight: 0
     #双面打印设置：0=单面；1=长边翻转；2=短边翻转
     sides: 0
     

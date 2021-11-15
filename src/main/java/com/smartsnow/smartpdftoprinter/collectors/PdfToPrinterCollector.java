@@ -8,6 +8,7 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
@@ -65,6 +66,7 @@ public class PdfToPrinterCollector implements JobCollector {
 	private Map<String,File> printedFiles=new ConcurrentHashMap<>();
 	private PrintService printService=null;
 	private static boolean existFlag=false;
+	
 	static {
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			
@@ -97,6 +99,7 @@ public class PdfToPrinterCollector implements JobCollector {
 				outDirObj.mkdirs();
 			}
 		}
+		includePattern=FileSystems.getDefault().getPathMatcher(appConfig.getInPattern());
 	}
 
 	@Override
@@ -241,10 +244,11 @@ public class PdfToPrinterCollector implements JobCollector {
 	 * @param v
 	 */
 	private void toPrinter(File v) {
-		try {
+		try(PDDocument document = PDDocument.load(v);) {
+			
 //			DocFlavor flavor = DocFlavor.INPUT_STREAM.PDF;
 //			Doc doc = new SimpleDoc(fis, flavor, null);
-			PDDocument document = PDDocument.load(v);
+			
 			//按指定页面拆分文档
 			List<SimpleEntry<Integer,Integer>> pageNumList=appConfig.getPageNumList();
 			List<PDDocument> pds=new ArrayList<>();
@@ -305,7 +309,7 @@ public class PdfToPrinterCollector implements JobCollector {
 			Paper paper = new Paper();
 			paper.setSize(width, height);
 			// 设置边距
-			paper.setImageableArea(marginLeft, marginRight, width - (marginLeft + marginRight), height - (marginTop + marginBottom));
+			paper.setImageableArea(marginLeft, marginTop, width - (marginLeft + marginRight), height - (marginTop + marginBottom));
 			// 自定义页面设置
 			PageFormat pageFormat = new PageFormat();
 			// 设置页面横纵向,LANDSCAPE表示横打;PORTRAIT表示竖打;REVERSE_LANDSCAPE表示打印空白
@@ -332,10 +336,15 @@ public class PdfToPrinterCollector implements JobCollector {
 			
 			PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
 			if(appConfig.getOutDir()!=null&&!appConfig.getOutDir().isEmpty()) {
-				URI uri=URI.create(new File(appConfig.getOutDir()+File.separator+v.getName()).toURI().toString());
-				log.info("destionation uri={}",uri.toString());
+				File outFile=new File(appConfig.getOutDir()+File.separator+v.getName());
+				if(outFile.exists()) {
+					outFile.delete();
+				}
+				URI uri=URI.create(outFile.toURI().toString());
+//				log.info("destionation uri={}",uri.toString());
 				attr.add(new Destination(uri));
-			}			
+			}
+			
 //			attr.add(MediaSizeName.ISO_A4);
 			if(appConfig.getPrinterSides()==0) {
 				attr.add(Sides.ONE_SIDED);
@@ -343,6 +352,9 @@ public class PdfToPrinterCollector implements JobCollector {
 				attr.add(Sides.TWO_SIDED_LONG_EDGE);
 			}else if(appConfig.getPrinterSides()==2) {
 				attr.add(Sides.TWO_SIDED_SHORT_EDGE);
+			}
+			for(Attribute attrOne:printerJob.getPrintService().getAttributes().toArray()) {
+				log.info("printer Attribute【{}】= {}",attrOne.getName(),attr.toString());
 			}
 			printerJob.print(attr);
 //			printerJob.print();

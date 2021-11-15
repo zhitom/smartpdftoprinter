@@ -18,6 +18,9 @@ public class AppConfig {
 	@Value("${smartpdftoprinter.in.dir}")
     private String inDir;
 	
+	@Value("${smartpdftoprinter.in.pattern}")
+    private String inPattern;
+	
 	@Value("${smartpdftoprinter.out.dir}")
     private String outDir;
 	
