@@ -9,6 +9,8 @@ smartpdftoprinter:
     dir: pdfs
     #glob形式
     pattern: 'glob:*.pdf'
+    #time or name
+    orderby: name
   out.dir: pdfs-out
   job:
     type: pdf

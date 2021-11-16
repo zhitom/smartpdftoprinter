@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.FileSystems;
+import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
@@ -17,6 +18,8 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.AbstractMap.SimpleEntry;
@@ -43,6 +46,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
 import com.smartsnow.smartpdftoprinter.AppConfig;
+import com.smartsnow.smartpdftoprinter.bean.OrderTypeEnum;
 import com.smartsnow.smartpdftoprinter.event.in.InJobInfo;
 import com.smartsnow.smartpdftoprinter.utils.SleepUtil;
 
@@ -127,7 +131,7 @@ public class PdfToPrinterCollector implements JobCollector {
 				return candidateFiles;
 			}
 			Path trueDir=Paths.get(directory.getAbsolutePath());
-			java.nio.file.Files.walkFileTree(trueDir, new SimpleFileVisitor<Path>(){
+			java.nio.file.Files.walkFileTree(trueDir,EnumSet.noneOf(FileVisitOption.class), Integer.MAX_VALUE, new SimpleFileVisitor<Path>(){
 				@Override
 		        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
 		            throws IOException {
@@ -179,6 +183,54 @@ public class PdfToPrinterCollector implements JobCollector {
 		      log.error("I/O exception occurred while listing directories. " +
 		                   "Files already matched will be returned. " + d, e);
 		    }
+		switch(OrderTypeEnum.get(appConfig.getInOrderBy())) {
+		case SIZE:
+			Collections.sort(candidateFiles, new Comparator<File>() {
+				public int compare(File f1, File f2) {
+					long diff = f1.length() - f2.length();
+					if (diff > 0)
+						return 1;
+					else if (diff == 0)
+						return 0;
+					else
+						return -1;
+				}
+				public boolean equals(Object obj) {
+					return true;
+				}
+			});
+			break;
+		case TIME:
+			Collections.sort(candidateFiles, new Comparator<File>() {
+				public int compare(File f1, File f2) {
+					long diff = f1.lastModified() - f2.lastModified();
+					if (diff > 0)
+					  return 1;
+					else if (diff == 0)
+					  return 0;
+					else
+					  return -1;
+				}
+				public boolean equals(Object obj) {
+					return true;
+				}
+			});
+		case NAME:
+		default:
+			Collections.sort(candidateFiles, new Comparator<File>() {
+				public int compare(File o1, File o2) {
+					if (o1.isDirectory() && o2.isFile())
+				          return -1;
+					if (o1.isFile() && o2.isDirectory())
+				          return 1;
+					return o1.getName().compareTo(o2.getName());
+				}
+				public boolean equals(Object obj) {
+					return true;
+				}
+			});
+			break;
+		}
 		return candidateFiles;
 	}
 
