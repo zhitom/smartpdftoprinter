@@ -84,6 +84,8 @@ public class AppConfig {
 	@Value("${smartpdftoprinter.printer.sides}")
     private int printerSides;
 	
+	private boolean setupModeFlag=false;
+	
 	public List<SimpleEntry<Integer,Integer>> getPageNumList(){
 		if(printerPageNumListStr==null||printerPageNumListStr.isEmpty()) {
 			return Collections.emptyList();
@@ -102,6 +104,7 @@ public class AppConfig {
 		}
 		return rets;
 	}
+	
     public int getInBatchSize() {
     	if(inBatchSize<=0) {
     		return Runtime.getRuntime().availableProcessors();

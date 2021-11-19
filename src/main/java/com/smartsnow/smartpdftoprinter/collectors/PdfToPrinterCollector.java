@@ -60,8 +60,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class PdfToPrinterCollector implements JobCollector {
 
-	@Autowired
-	private AppConfig appConfig;
+	
+	private static AppConfig appConfig;
 	private String completedSuffix=null;//结束文件名后缀，此文件一般无需处理
 	private PathMatcher includePattern=null;//包含文件的正则表达式
 	private PathMatcher ignorePattern=null;//忽略文件的正则表达式
@@ -79,6 +79,10 @@ public class PdfToPrinterCollector implements JobCollector {
 				existFlag=true;
 			}
 		}));
+	}
+	@Autowired
+	public void setAppConfig(AppConfig appConfig) {
+		PdfToPrinterCollector.appConfig=appConfig;
 	}
 	@Override
 	public void prepare() {
@@ -258,7 +262,7 @@ public class PdfToPrinterCollector implements JobCollector {
 			toPrinter(v);			
 		});
 	}
-	public void setYourPrinter() {
+	private void setYourPrinter() {
 		if(printService!=null) {
 			return;
 		}
@@ -283,6 +287,38 @@ public class PdfToPrinterCollector implements JobCollector {
 		for(Attribute attr:printService.getAttributes().toArray()) {
 			log.info("printer Attribute【{}】= {}",attr.getName(),attr.toString());
 		}
+	}
+	public static void printPrinterInfos(String configuredPrinterName) {
+		System.out.println("*******************************************");
+		System.out.println("打印机列表：");
+		int i=0;
+//		int chooseResult=-1;
+		PrintService[] pss=PrinterJob.lookupPrintServices();
+		for (PrintService ps : pss) {
+			i++;
+		    if (ps.getName().equals(configuredPrinterName)) {
+//		    	chooseResult=i;
+		    	System.out.println(String.format("(*)【%s】 %s",i,ps.getName()));
+		    }else {
+		    	System.out.println(String.format("   【%s】 %s",i,ps.getName()));
+		    }
+		}
+		System.out.println("*******************************************");
+//		System.out.println(String.format("【当前选中的打印机】 %s",chooseResult<0?"无":pss[chooseResult-1]));
+//		System.out.println("*******************************************");
+	}
+	public static String getPrinterName(int index) {
+		if(index<=0) {
+			return "";
+		}
+		int i=0;
+		for (PrintService ps : PrinterJob.lookupPrintServices()) {
+			i++;
+			if(i==index) {
+				return ps.getName();
+			}
+		}
+		return "";
 	}
 	public int getPrinterQueueRemainSize() {
 		for(Attribute attr:printService.getAttributes().toArray()) {

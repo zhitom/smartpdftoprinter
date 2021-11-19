@@ -1,6 +1,7 @@
 package com.smartsnow.smartpdftoprinter;
 
 
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,6 +38,10 @@ public class SmartPdfToPrinterApplication extends ModuleFrame {
 		super(SmartPdfToPrinterApplication.class.getName(),"smartpdf");
 	}
 	public static void main(String[] args) {
+		if(args.length>0&&args[0].equals("setup")) {
+			SmartPdfToPrinterSetupApplication.setup(Arrays.asList(args).stream().filter(v->!v.equals("setup")).toArray(String[]::new));
+			System.exit(0);
+		}
 		new DefaultModuleApplication(
 				SpringApplication.run(SmartPdfToPrinterApplication.class,args).getBean(SmartPdfToPrinterApplication.class),
 				null).run();
@@ -44,6 +49,11 @@ public class SmartPdfToPrinterApplication extends ModuleFrame {
 
 	@Override
 	public void beforeLoop() {
+//		if(option.getValue("p")!=null) {
+//			appConfig.setSetupModeFlag(true);
+//			setup();
+//			stopFlag=true;
+//		}
 		try {
 //			bizEventProducer.startup();
 //			kafkaProducer.startup();
@@ -53,6 +63,7 @@ public class SmartPdfToPrinterApplication extends ModuleFrame {
 			log.error("",e);
 		}
 	}
+	
 	@Override
 	public void end() {
 		//需要保证停的顺序,所以采用显式调用,而不用preDestroy
@@ -63,6 +74,7 @@ public class SmartPdfToPrinterApplication extends ModuleFrame {
 
 	@Override
 	public void initialize() {
+//		getOptionUtil().addOptWithNoArg("p", "printer", "设置打印机", true);
 	}
 
 	@Override
