@@ -24,6 +24,9 @@ public class AppConfig {
 	@Value("${smartpdftoprinter.in.orderby}")
     private String inOrderBy;
 	
+	@Value("${smartpdftoprinter.cmd.dir}")
+    private String cmdDir;
+	
 	@Value("${smartpdftoprinter.out.dir}")
     private String outDir;
 	

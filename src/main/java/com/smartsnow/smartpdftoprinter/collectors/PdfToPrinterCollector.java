@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.print.PrintService;
@@ -48,6 +49,7 @@ import com.google.common.base.Preconditions;
 import com.smartsnow.smartpdftoprinter.AppConfig;
 import com.smartsnow.smartpdftoprinter.bean.OrderTypeEnum;
 import com.smartsnow.smartpdftoprinter.event.in.InJobInfo;
+import com.smartsnow.smartpdftoprinter.utils.JobControlCommandUtil;
 import com.smartsnow.smartpdftoprinter.utils.SleepUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +72,7 @@ public class PdfToPrinterCollector implements JobCollector {
 	private Map<String,File> printedFiles=new ConcurrentHashMap<>();
 	private PrintService printService=null;
 	private static boolean existFlag=false;
+	private static AtomicLong count=new AtomicLong(0);
 	
 	static {
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -106,6 +109,12 @@ public class PdfToPrinterCollector implements JobCollector {
 			if(!outDirObj.exists()) {
 				outDirObj.mkdirs();
 			}
+		}
+		if(JobControlCommandUtil.isActive(appConfig)) {
+			if(!appConfig.getCmdDir().endsWith("/")) {
+				appConfig.setCmdDir(appConfig.getCmdDir()+File.separator);
+			}
+			JobControlCommandUtil.clear(appConfig);
 		}
 		includePattern=FileSystems.getDefault().getPathMatcher(appConfig.getInPattern());
 	}
@@ -258,6 +267,12 @@ public class PdfToPrinterCollector implements JobCollector {
 			}
 			if(appConfig.getJobInterval()>0) {
 				SleepUtil.Sleep(appConfig.getJobInterval()*1000);
+			}
+			count.incrementAndGet();
+			try {
+				log.info("【{}】job={}",count.get(),v.getCanonicalPath());
+			} catch (IOException e) {
+				log.error("v={}",v.getAbsolutePath(),e);
 			}
 			toPrinter(v);			
 		});
@@ -441,9 +456,9 @@ public class PdfToPrinterCollector implements JobCollector {
 			}else if(appConfig.getPrinterSides()==2) {
 				attr.add(Sides.TWO_SIDED_SHORT_EDGE);
 			}
-			for(Attribute attrOne:printerJob.getPrintService().getAttributes().toArray()) {
-				log.info("printer Attribute【{}】= {}",attrOne.getName(),attr.toString());
-			}
+//			for(Attribute attrOne:printerJob.getPrintService().getAttributes().toArray()) {
+//				log.info("printer Attribute【{}】= {}",attrOne.getName(),attr.toString());
+//			}
 			printerJob.print(attr);
 //			printerJob.print();
 			//在队列里边无法删除

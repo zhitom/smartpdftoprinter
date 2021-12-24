@@ -46,7 +46,12 @@ public class SmartPdfToPrinterApplication extends ModuleFrame {
 				SpringApplication.run(SmartPdfToPrinterApplication.class,args).getBean(SmartPdfToPrinterApplication.class),
 				null).run();
 	}
-
+	public boolean isExit() {
+		return super.isStop();
+	}
+	public void exit() {
+		super.setStopFlag(true);
+	}
 	@Override
 	public void beforeLoop() {
 //		if(option.getValue("p")!=null) {

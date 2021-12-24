@@ -112,7 +112,7 @@ public class JobToBizEventProducer {
 
 	private void batch(List<InJobInfo> records){
 		for (InJobInfo record : records) {
-			log.info("record.value={}",record);
+//			log.info("record.value={}",record);
 			bizEventProducer.putEvent(record,EventTypeEnum.EVENT_TYPE_LOGIN_TO_JOB);
 			if(appConfig.getJobInterval()>0) {
 				try {

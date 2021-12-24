@@ -3,6 +3,7 @@ package com.smartsnow.smartpdftoprinter.consumer;
 import java.io.File;
 
 import com.smartsnow.smartpdftoprinter.AppConfig;
+import com.smartsnow.smartpdftoprinter.SmartPdfToPrinterApplication;
 import com.smartsnow.smartpdftoprinter.bean.EventTypeEnum;
 import com.smartsnow.smartpdftoprinter.bean.JobTypeEnum;
 import com.smartsnow.smartpdftoprinter.collectors.JobCollector;
@@ -10,6 +11,8 @@ import com.smartsnow.smartpdftoprinter.collectors.JobCollectorFactory;
 import com.smartsnow.smartpdftoprinter.event.in.InEventWrapper;
 import com.smartsnow.smartpdftoprinter.event.in.InJobInfo;
 import com.smartsnow.smartpdftoprinter.producer.JobToBizEventProducer;
+import com.smartsnow.smartpdftoprinter.utils.JobControlCommandUtil;
+import com.smartsnow.smartpdftoprinter.utils.SleepUtil;
 import com.smartsnow.smartpdftoprinter.utils.SpringContextUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,7 @@ public class EventConsumerJob extends EventConsumerBase {
 	private JobToBizEventProducer jobToBizEventProducer=SpringContextUtils.getBean(JobToBizEventProducer.class);
 	private AppConfig appConfig=SpringContextUtils.getBean(AppConfig.class);
 	private JobCollector jobHandler=null;
+	private SmartPdfToPrinterApplication application=SpringContextUtils.getBean(SmartPdfToPrinterApplication.class);
 	
 	@Override
 	public void consumer(InEventWrapper event) throws Exception {
@@ -27,11 +31,22 @@ public class EventConsumerJob extends EventConsumerBase {
 //			log.info("SKIPPED EVENT FOR NOT-SUCCESS!!!");
 //			return;
 //		}
+		if(JobControlCommandUtil.isActive(appConfig)) {
+			if(JobControlCommandUtil.isPause(appConfig)) {
+				while (JobControlCommandUtil.isPause(appConfig)&&!application.isExit()) {
+					log.info("Pause...");
+					SleepUtil.Sleep(3000);
+				}
+			}else if(JobControlCommandUtil.isExit(appConfig)) {
+				application.exit();
+				return;
+			}
+		}
 		InJobInfo inJobInfo = null;
 		try {
 			// 解析和读取输入事件内容
 			event.parse();
-			log.info("do event...{}", event);
+//			log.info("do event...{}", event);
 			if (event.getInEvent().getContent() == null) {
 				log.error("SKIPPED,error event={}", event);
 				return;

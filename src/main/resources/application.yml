@@ -11,6 +11,9 @@ smartpdftoprinter:
     pattern: 'glob:*.pdf'
     #time or name
     orderby: name
+  #通过空文件来控制指令
+  cmd:
+    dir: 
   out.dir: pdfs-out
   job:
     type: pdf
@@ -43,12 +46,12 @@ smartpdftoprinter:
     #A3: 297mm*420mm A4: 210mm*297mm ...
     width: 210
     height: 297
-    marginTop: 0
-    marginBottom: 0
-    marginLeft: 0
-    marginRight: 0
+    marginTop: 10
+    marginBottom: 10
+    marginLeft: 10
+    marginRight: 10
     #下面的是去除了页眉和页脚,页眉和页脚可能显示在边距的空间上面，高度不够显示时可能会有覆盖掉
-    #marginTop: 20
+    #marginTop: 17
     #marginBottom: 0
     #marginLeft: 0
     #marginRight: 0
