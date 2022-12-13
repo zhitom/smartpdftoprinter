@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.smartsnow</groupId>
     <artifactId>smartpdftoprinter</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>smartpdftoprinter</name>
     <description>SmartPdfToPrinter</description>
 
