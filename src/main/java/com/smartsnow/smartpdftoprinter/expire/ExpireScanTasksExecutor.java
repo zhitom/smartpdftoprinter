@@ -8,9 +8,10 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aivanlink.common.base.thread.ExecutorsUtil;
-import com.aivanlink.common.base.thread.ExecutorsUtil.ThreadWorkerPool;
-import com.aivanlink.common.base.thread.SafeRunnable;
+import com.smartsnow.smartpdftoprinter.utils.ExecutorsUtil;
+import com.smartsnow.smartpdftoprinter.utils.SafeRunnable;
+import com.smartsnow.smartpdftoprinter.utils.ExecutorsUtil.ThreadWorkerPool;
+
 
 /**将来可以有多个超时扫描任务*/
 @Component

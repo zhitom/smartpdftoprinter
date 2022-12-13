@@ -45,7 +45,6 @@ import org.apache.pdfbox.util.Matrix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Preconditions;
 import com.smartsnow.smartpdftoprinter.AppConfig;
 import com.smartsnow.smartpdftoprinter.bean.OrderTypeEnum;
 import com.smartsnow.smartpdftoprinter.event.in.InJobInfo;
@@ -138,7 +137,7 @@ public class PdfToPrinterCollector implements JobCollector {
 		List<File> candidateFiles = new ArrayList<File>();
 		try {
 			File directory=new File(d);
-			Preconditions.checkNotNull(directory);
+			// Preconditions.checkNotNull(directory);
 			
 			if (!directory.isDirectory()) {
 				return candidateFiles;

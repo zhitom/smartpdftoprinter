@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 import org.yaml.snakeyaml.Yaml;
 
-import com.aivanlink.common.base.sys.OptionUtil;
 import com.smartsnow.smartpdftoprinter.collectors.PdfToPrinterCollector;
+import com.smartsnow.smartpdftoprinter.utils.OptionUtil;
 
 /**
  * @author Shandy

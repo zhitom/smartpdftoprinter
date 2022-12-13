@@ -1,7 +1,7 @@
 package com.smartsnow.smartpdftoprinter.consumer;
 
-import com.aivanlink.common.base.thread.SerialConsumersRouteGroupQueueThreadPool.RouteGroupQueueWorkerWithRandomNextKey;
 import com.smartsnow.smartpdftoprinter.event.in.InEventWrapper;
+import com.smartsnow.smartpdftoprinter.utils.SerialConsumersRouteGroupQueueThreadPool.RouteGroupQueueWorkerWithRandomNextKey;
 import com.codahale.metrics.Timer;
 
 public abstract class EventConsumerBase 

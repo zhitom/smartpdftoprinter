@@ -5,8 +5,6 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.aivanlink.common.frame.DefaultModuleApplication;
-import com.aivanlink.common.frame.ModuleFrame;
 import com.smartsnow.smartpdftoprinter.expire.ExpireScanTasksExecutor;
 import com.smartsnow.smartpdftoprinter.producer.BizEventConsumers;
 import com.smartsnow.smartpdftoprinter.producer.JobToBizEventProducer;

@@ -2,7 +2,8 @@ package com.smartsnow.smartpdftoprinter.expire;
 
 import org.springframework.stereotype.Component;
 
-import com.aivanlink.common.base.thread.SafeRunnable;
+import com.smartsnow.smartpdftoprinter.utils.SafeRunnable;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Component

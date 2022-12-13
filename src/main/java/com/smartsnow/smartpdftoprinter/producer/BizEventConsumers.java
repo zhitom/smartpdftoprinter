@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
-import com.aivanlink.common.base.metrics.MetricsUtil;
-import com.aivanlink.common.base.metrics.MetricsUtil.MetricsReporter;
-import com.aivanlink.common.base.thread.SerialConsumersRouteGroupQueueThreadPool;
 import com.smartsnow.smartpdftoprinter.AppConfig;
 import com.smartsnow.smartpdftoprinter.bean.EventConsumerEnum;
 import com.smartsnow.smartpdftoprinter.bean.EventTypeEnum;
@@ -18,6 +15,9 @@ import com.smartsnow.smartpdftoprinter.consumer.EventConsumerBase;
 import com.smartsnow.smartpdftoprinter.consumer.EventConsumerFactory;
 import com.smartsnow.smartpdftoprinter.event.in.InEventWrapper;
 import com.smartsnow.smartpdftoprinter.event.in.InJobInfo;
+import com.smartsnow.smartpdftoprinter.utils.MetricsUtil;
+import com.smartsnow.smartpdftoprinter.utils.SerialConsumersRouteGroupQueueThreadPool;
+import com.smartsnow.smartpdftoprinter.utils.MetricsUtil.MetricsReporter;
 import com.codahale.metrics.Timer;
 import com.codahale.metrics.Slf4jReporter.LoggingLevel;
 

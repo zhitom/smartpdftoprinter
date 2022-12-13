@@ -2,9 +2,6 @@ package com.smartsnow.smartpdftoprinter.utils;
 
 import java.util.concurrent.LinkedTransferQueue;
 
-import com.aivanlink.common.base.thread.RouteGroupQueue;
-import com.aivanlink.common.base.thread.SchedulableQueueCheckThread;
-
 public class CheckQueueSize {
 	private CheckQueueSize() {}
 	public static <T,Q> void newCheckQueue(LinkedTransferQueue<Q> queue,Class<T> clazz) {

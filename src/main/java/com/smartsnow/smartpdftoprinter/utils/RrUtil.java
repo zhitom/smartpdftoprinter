@@ -1,8 +1,5 @@
 package com.smartsnow.smartpdftoprinter.utils;
 
-import com.aivanlink.common.base.cache.DefaultKVCache;
-import com.aivanlink.common.base.cache.KVCache;
-import com.aivanlink.common.base.cache.SimpleKVCache;
 
 import lombok.extern.slf4j.Slf4j;
 

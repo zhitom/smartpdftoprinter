@@ -2,9 +2,9 @@ package com.smartsnow.smartpdftoprinter.event.in;
 
 import java.time.ZonedDateTime;
 
-import com.aivanlink.common.base.time.DateUtil;
 import com.smartsnow.smartpdftoprinter.bean.EventStatusEnum;
 import com.smartsnow.smartpdftoprinter.bean.EventTypeEnum;
+import com.smartsnow.smartpdftoprinter.utils.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
